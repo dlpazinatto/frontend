@@ -1,0 +1,32 @@
+<div *ngIf="livro" class="detalhes-livro-container">
+  <h2>Detalhes do Livro</h2>
+
+  <div class="livro-info">
+    <div class="livro-info-item">
+      <label>ID:</label>
+      <span>{{ livro.id }}</span>
+    </div>
+  
+    <div class="livro-info-item">
+      <label>Título:</label>
+      <span>{{ livro.title }}</span>
+    </div>
+  
+    <div class="livro-info-item">
+      <label>Autor:</label>
+      <span>{{ livro.author }}</span>
+    </div>
+  
+    <div class="livro-info-item">
+      <label>Data de Publicação:</label>
+      <span>{{ livro.publishedDate | date:'dd/MM/yyyy' }}</span>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <a routerLink="/livros" class="btn voltar">Voltar para a lista</a>
+    <button (click)="editarLivro()" class="btn editar">Editar</button>
+  </div>
+</div>
+
+<div *ngIf="carregando" class="loading-message">Carregando detalhes do livro...</div>

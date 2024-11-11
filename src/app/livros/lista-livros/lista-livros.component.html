@@ -1,0 +1,108 @@
+<div class="container">
+  
+  <div class="logoff-container">
+    <button (click)="onLogout()" class="logoff-button">Logoff</button>
+  </div>
+
+  <div class="modal" *ngIf="showForm">
+    
+    <div class="modal-content">
+      <span class="close" (click)="closeForm()">&times;</span>
+      <h2>Adicionar Livro</h2>
+      <form [formGroup]="livroForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="title">Título:</label>
+          <input id="title" formControlName="title" type="text" class="input-field" />
+          <div *ngIf="livroForm.get('title')?.invalid && livroForm.get('title')?.touched" class="error-message">
+            <small *ngIf="livroForm.get('title')?.hasError('required')">Título é obrigatório.</small>
+            <small *ngIf="livroForm.get('title')?.hasError('minlength')">Título deve ter pelo menos 3 caracteres.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="author">Autor:</label>
+          <input id="author" formControlName="author" type="text" class="input-field" />
+          <div *ngIf="livroForm.get('author')?.invalid && livroForm.get('author')?.touched" class="error-message">
+            <small *ngIf="livroForm.get('author')?.hasError('required')">Autor é obrigatório.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="publishedDate">Data de Publicação:</label>
+          <input id="publishedDate" formControlName="publishedDate" type="date" class="input-field" />
+          <div *ngIf="livroForm.get('publishedDate')?.invalid && livroForm.get('publishedDate')?.touched" class="error-message">
+            <small *ngIf="livroForm.get('publishedDate')?.hasError('required')">Data de publicação é obrigatória.</small>
+          </div>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="submit" [disabled]="livroForm.invalid" class="submit-button">Adicionar Livro</button>
+          <button type="button" (click)="closeForm()" class="cancel-button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="search-container">
+    <label for="searchTitle">Buscar por Título:</label>
+    <input 
+      id="searchTitle" 
+      type="text" 
+      [(ngModel)]="searchQuery" 
+      placeholder="Digite o título do livro"
+      class="search-input" 
+    />
+    <button (click)="onSearch()">Buscar</button>
+  </div>
+
+  <!-- Lista de Livros -->
+  <div class="table-container">
+    <h2>Lista de Livros</h2>
+    <table class="livro-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Data de Publicação</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let livro of livros">
+          <td><a [routerLink]="['/livros', livro.id]">{{ livro.title }}</a></td>
+          <td>{{ livro.author }}</td>
+          <td>{{ livro.publishedDate | date: 'dd/MM/yyyy' }}</td>
+          <td class="actions">
+            <button [routerLink]="['/livros', livro.id]" title="Visualizar">
+              <i class="fa fa-eye"></i>
+            </button>
+            <button (click)="excluirLivro(livro.id)" title="Excluir"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination-controls">
+    <label for="limit">Livros por página:</label>
+    <select id="limit" [(ngModel)]="limit" (change)="onLimitChange()">
+      <option *ngFor="let option of [2, 4]" [value]="option">{{ option }}</option>
+    </select>
+  </div>
+
+  <div *ngIf="totalLivros > limit" class="pagination-controls">
+    <button (click)="prevPage()" [disabled]="page === 1 || carregando">
+      <span *ngIf="carregando && page === 1"><div class="spinner"></div></span>
+      <span *ngIf="!carregando">Anterior</span>
+    </button>
+    <button (click)="nextPage()" [disabled]="page * limit >= totalLivros || carregando">
+      <span *ngIf="carregando && page * limit < totalLivros"><div class="spinner"></div></span>
+      <span *ngIf="!carregando">Próxima</span>
+    </button>
+    <p> Página {{ page }} de {{ totalLivros / limit | number: '1.0-0' }} </p>
+  </div>
+
+  <div class="add-button-container">
+    <button class="add-button" (click)="showForm = true">Adicionar Livro</button>
+  </div>
+</div>

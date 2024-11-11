@@ -1,0 +1,54 @@
+<div class="modal">
+  <div class="modal-content">
+    <h2>Editar Livro</h2>
+
+    <form [formGroup]="livroForm" (ngSubmit)="salvarLivro()">
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input
+          id="title"
+          formControlName="title"
+          type="text"
+          class="form-control"
+          placeholder="Digite o título"
+        />
+        <div *ngIf="livroForm.get('title')?.invalid && livroForm.get('title')?.touched" class="error-message">
+          <small *ngIf="livroForm.get('title')?.hasError('required')">Título é obrigatório.</small>
+          <small *ngIf="livroForm.get('title')?.hasError('minlength')">Título deve ter pelo menos 3 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="author">Autor:</label>
+        <input
+          id="author"
+          formControlName="author"
+          type="text"
+          class="form-control"
+          placeholder="Digite o nome do autor"
+        />
+        <div *ngIf="livroForm.get('author')?.invalid && livroForm.get('author')?.touched" class="error-message">
+          <small *ngIf="livroForm.get('author')?.hasError('required')">Autor é obrigatório.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="publishedDate">Data de Publicação:</label>
+        <input
+          id="publishedDate"
+          formControlName="publishedDate"
+          type="date"
+          class="form-control"
+        />
+        <div *ngIf="livroForm.get('publishedDate')?.invalid && livroForm.get('publishedDate')?.touched" class="error-message">
+          <small *ngIf="livroForm.get('publishedDate')?.hasError('required')">Data de publicação é obrigatória.</small>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="livroForm.invalid">Salvar</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

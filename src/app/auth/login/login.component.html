@@ -1,0 +1,21 @@
+<div class="login-container">
+  <div class="login-form">
+    <h2>Login</h2>
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+      <label for="email">Email</label>
+      <input type="email" id="email" [(ngModel)]="email" name="email" required email #emailInput="ngModel"/>
+      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+        <small *ngIf="emailInput.errors?.['required']" class="error">Email é obrigatório.</small>
+        <small *ngIf="emailInput.errors?.['email']" class="error">Formato de email inválido.</small>
+      </div>
+      <label for="password">Senha</label>
+      <input type="password" id="password" [(ngModel)]="password" name="password" required  #passwordInput="ngModel"/>
+
+      <button type="submit" [disabled]="!loginForm.valid">Entrar</button>
+
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>
