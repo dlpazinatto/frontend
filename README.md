@@ -55,9 +55,16 @@ On the new page, the book details are shown, and there are two buttons:
 - **Buttun 1:** "Voltar para a lista". This button return no list ok books
 - **Button 2:** "Editar" This buttun show modal to edit any book information execpt book id
 
-In the edit modal, both the "Cancelar" and "Salvar" buttons return to the book list.
+In the edit modal, both the "Cancelar" and "Salvar" buttons return to the book list.  
 
 
+## Stay in touch
+
+- Author - [Dilceu Pazinatto](dlpazinatto@gmail.com)
+
+## License
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 
 
